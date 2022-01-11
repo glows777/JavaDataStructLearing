@@ -82,6 +82,7 @@ public class LinkedListCommonExercise {
     /**
      * 合并有序列表
      * 创建第三条链表去存结果
+     * 无头指针
      **/
     public static Node mergeSortedLists(Node la, Node lb) {
         if (la == null) {
@@ -120,12 +121,36 @@ public class LinkedListCommonExercise {
         return head;
     }
     /**
-     * 合并链表
-     * 利用哨兵优化简化难度版
+     * 优化合并链表
+     * 利用哨兵优化简化实现难度
+     * 哨兵占住头指针，这样后面推进即可，最后返回哨兵的下一位，即新链表的头结点
      **/
-    public static Node mergeTwoLists(Node l1, Node l2) {
-        // 未完成...
-        return null;
+     public static class ListNode {
+         int val;
+        ListNode next;
+        ListNode(int x) { val = x; }
+     }
+    public static ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        ListNode soldier = new ListNode(0);
+        ListNode p = soldier;
+
+        while (l1 != null && l2 != null) {
+            if (l1.val > l2.val) {
+                p.next = l2;
+                l2 = l2.next;
+            } else {
+                p.next = l1;
+                l1 = l1.next;
+            }
+            p = p.next;
+        }
+        if (l1 != null) {
+            p.next = l1;
+        }
+        if (l2 != null) {
+            p.next = l2;
+        }
+        return soldier.next;
     }
 
     /**
@@ -178,10 +203,5 @@ public class LinkedListCommonExercise {
         }
         return list;
     }
-
-
-
-
-
 
 }
